@@ -4,6 +4,7 @@ import os
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
+
 load_dotenv()
 
 def get_engine():
@@ -11,4 +12,6 @@ def get_engine():
     if not database_url:
         raise ValueError("DATABASE_URL ist nicht gesetzt. Bitte .env prüfen.")
     return create_engine(database_url)
+# %%
+
 # %%

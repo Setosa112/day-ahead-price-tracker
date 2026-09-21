@@ -14,3 +14,25 @@ def upsert_day_ahead_prices(df, engine):
         for row in df.to_dict(orient="records"):
             conn.execute(UPSERT_SQL, row)
 # %%
+
+def upsert_rows(df, engine, table: str, conflict_cols: list, update_cols: list) -> None:
+    columns = list(df.columns)
+    col_list = ", ".join(columns)
+    placeholders = ", ".join(f":{c}" for c in columns)
+    conflict_clause = ", ".join(conflict_cols)
+    update_clause = ", ".join(f"{c} = EXCLUDED.{c}" for c in update_cols)
+
+    sql = text(f"""
+        INSERT INTO {table} ({col_list})
+        VALUES ({placeholders})
+        ON CONFLICT ({conflict_clause})
+        DO UPDATE SET {update_clause};
+    """)
+
+    with engine.begin() as conn:
+        for row in df.to_dict(orient="records"):
+            conn.execute(sql, row)
+
+
+
+
