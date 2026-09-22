@@ -13,7 +13,7 @@ def upsert_day_ahead_prices(df, engine):
     with engine.begin() as conn:
         for row in df.to_dict(orient="records"):
             conn.execute(UPSERT_SQL, row)
-# %%
+
 
 def upsert_rows(df, engine, table: str, conflict_cols: list, update_cols: list) -> None:
     columns = list(df.columns)
@@ -36,3 +36,5 @@ def upsert_rows(df, engine, table: str, conflict_cols: list, update_cols: list) 
 
 
 
+
+# %%

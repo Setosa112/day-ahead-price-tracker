@@ -12,6 +12,6 @@ def get_engine():
     if not database_url:
         raise ValueError("DATABASE_URL ist nicht gesetzt. Bitte .env prüfen.")
     return create_engine(database_url)
-# %%
+
 
 # %%
