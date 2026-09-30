@@ -88,6 +88,10 @@ market_df["residual_load_mw"] = market_df["load_mw"] - market_df["renewables_mw"
 market_df.head()
 # %%
 
+#####-------------------------------------####
+#####---Small analysis--------------------####
+#####-------------------------------------####
+
 market_df.isna().sum()
 # %%
 market_df[market_df.isna().any(axis=1)]
@@ -97,4 +101,10 @@ market_df.loc["2024-12-11":"2024-12-13"][["price_eur_mwh", "renewables_mw", "res
 # %%
 market_df_clean = market_df.dropna()
 print(f"{len(market_df) - len(market_df_clean)} von {len(market_df)} Zeilen wegen fehlender Werte entfernt.")
+# %%
+
+# %%
+market_df["hour"] = market_df.index.hour
+hourly_avg = market_df.groupby("hour")[["price_eur_mwh", "residual_load_mw"]].mean()
+hourly_avg.plot(subplots=True, title=["Durchschnittspreis nach Uhrzeit", "Durchschnittliche Residuallast nach Uhrzeit"], legend=False)
 # %%

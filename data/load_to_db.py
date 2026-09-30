@@ -1,6 +1,6 @@
 #%%
 from sqlalchemy import text
-from db import get_engine
+from data.db import get_engine
 
 UPSERT_SQL = text("""
     INSERT INTO day_ahead_prices (timestamp, bidding_zone, price_eur_mwh)
